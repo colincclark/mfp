@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from "react";
+import React, { lazy, Suspense, useState } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { StylesProvider, createGenerateClassName } from "@material-ui/core/styles"
 
@@ -14,14 +14,19 @@ const generateClassName = createGenerateClassName({
 })
 
 export default () => {
+  const [isAuthenticated, setIsAuthenticed] = useState(false)
+
+  console.log('isAuthenticated: ', isAuthenticated)
   return <>
     <BrowserRouter>
       <StylesProvider generateClassName={generateClassName}>
         <div>
-          <Header />
+          <Header isAuthenticated={isAuthenticated} onSignOut={setIsAuthenticed} />
           <Suspense fallback={<CircularProgress />}>
             <Switch>
-              <Route path="/auth" component={AuthLazy} />
+              <Route path="/auth">
+                <AuthLazy onAuthChange={(isAuthed) => setIsAuthenticed(isAuthed)} />
+              </Route>
               <Route path="/" component={MarketingLazy} />
             </Switch>
           </Suspense>
