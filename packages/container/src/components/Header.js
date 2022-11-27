@@ -92,7 +92,6 @@ export default function Header({ signedIn, onSignOut }) {
             {signedIn ? 'Logout' : 'Login'}
           </Button>
         </Toolbar>
-        <div class={classes.footer}>My footer</div>
       </AppBar>
     </React.Fragment>
   );
